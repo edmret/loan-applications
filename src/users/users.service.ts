@@ -5,6 +5,7 @@ export interface User {
   userId: number;
   username: string;
   password: string;
+  roles: string[];
 }
 
 @Injectable()
@@ -14,11 +15,13 @@ export class UsersService {
       userId: 1,
       username: 'john',
       password: 'changeme',
+      roles: ['admin'],
     },
     {
       userId: 2,
       username: 'maria',
       password: 'guess',
+      roles: ['applicant'],
     },
   ];
 
