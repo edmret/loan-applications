@@ -1,6 +1,5 @@
 import {
   Controller,
-  Get,
   Request,
   Post,
   UseGuards,
@@ -8,21 +7,16 @@ import {
 } from '@nestjs/common';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
-import { AppService } from './app.service';
 import { Public } from './decorators/public.decorator';
-import { Roles } from './decorators/roles.decorator';
-import { Role } from './enums/role.enum';
 import { CredentialsDto } from './dto/credentials.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @ApiTags('Auth')
 @Controller()
-export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private authService: AuthService,
-  ) {}
+export class AuthController {
+  constructor(private authService: AuthService) {}
 
   @ApiOperation({
     summary: 'Login',
@@ -44,14 +38,26 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
-
-  @Get('hi')
-  @Roles(Role.Admin)
-  getHello(): string {
-    return this.appService.getHello();
+  @ApiOperation({
+    summary: 'Register',
+    description: 'Register new user based on user credentials',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The user was created',
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'bad data may the user already exists',
+  })
+  @ApiBody({
+    type: RegisterDto,
+    description: 'The JSON body to create register new user',
+  })
+  @Public()
+  @Post('auth/register')
+  async register(@Request() req): Promise<string> {
+    await this.authService.register(req.body);
+    return 'User was created successfully!';
   }
 }

@@ -1,31 +1,57 @@
-import { Injectable } from '@nestjs/common';
-
-// This should be a real class/interface representing a user entity
-export interface User {
-  userId: number;
-  username: string;
-  password: string;
-  roles: string[];
-}
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/db/prisma.service';
+import { Role } from 'src/enums/role.enum';
+import { User } from 'src/types/User.type';
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-      roles: ['admin'],
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-      roles: ['applicant'],
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  async create(data: { username: string; password: string; roles: string[] }) {
+    // check if the user already exists
+    const user = await this.findOne(data.username);
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
+    return this.prisma.user.create({
+      data: {
+        ...data,
+        roles: {
+          connectOrCreate: [
+            {
+              where: {
+                id: Role.Applicant,
+              },
+              create: {
+                name: Role.Applicant,
+                id: Role.Applicant,
+              },
+            },
+          ],
+        },
+      },
+      include: {
+        roles: true,
+      },
+    });
+  }
+
+  async findOne(
+    username: string,
+    includeRoles: boolean = false,
+  ): Promise<User | undefined> {
+    const user = await this.prisma.user.findUnique({
+      where: { username },
+      include: { roles: includeRoles },
+    });
+
+    if (!user) {
+      return undefined;
+    }
+
+    return {
+      ...user,
+      roles: user.roles?.map((role) => role.id) ?? [],
+    };
   }
 }

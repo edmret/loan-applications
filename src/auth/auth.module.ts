@@ -9,9 +9,12 @@ import { jwtConstants } from './constants';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './roles.guard';
+import { DbModule } from 'src/db/db.module';
+import { HashService } from './hash.service';
 
 @Module({
   imports: [
+    DbModule,
     UsersModule,
     PassportModule,
     JwtModule.register({
@@ -22,6 +25,7 @@ import { RolesGuard } from './roles.guard';
   providers: [
     AuthService,
     LocalStrategy,
+    HashService,
     JwtStrategy,
     {
       provide: APP_GUARD,
