@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   async register(user: any) {
-    const password = this.hashService.hashText(user.password);
+    const password = await this.hashService.hashText(user.password);
     return this.usersService.create({
       ...user,
       password,
