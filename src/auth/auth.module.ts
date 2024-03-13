@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './roles.guard';
 import { DbModule } from 'src/db/db.module';
 import { HashService } from './hash.service';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -37,5 +38,6 @@ import { HashService } from './hash.service';
     },
   ],
   exports: [AuthService],
+  controllers: [AuthController],
 })
 export class AuthModule {}

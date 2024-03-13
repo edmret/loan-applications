@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Role } from 'src/constants/role.enum';
 import { PrismaService } from 'src/db/prisma.service';
-import { Role } from 'src/enums/role.enum';
 import { User } from 'src/types/User.type';
 
 @Injectable()

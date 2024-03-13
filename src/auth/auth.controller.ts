@@ -5,13 +5,13 @@ import {
   UseGuards,
   HttpStatus,
 } from '@nestjs/common';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { AuthService } from './auth/auth.service';
-import { Public } from './decorators/public.decorator';
-import { CredentialsDto } from './dto/credentials.dto';
+import { LocalAuthGuard } from './local-auth.guard';
+import { AuthService } from './auth.service';
+import { Public } from '../decorators/public.decorator';
+import { CredentialsDto } from '../dto/credentials.dto';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { LoginDto } from './dto/login.dto';
-import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from '../dto/login.dto';
+import { RegisterDto } from '../dto/register.dto';
 
 @ApiTags('Auth')
 @Controller()

@@ -7,10 +7,10 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Enhanced Loan Application Processing Service Challenge')
     .setDescription(
-      'microservice that manages loan applications, including submission, status checks, and admin management. Optionally, add authentication and authorization to secure the service and manage user roles.',
+      'microservice that manages loan applications, including submission, status checks, and admin management.',
     )
     .setVersion('1.0')
-    .addTag('loans')
+    .addTag('Loan Application')
     .addBearerAuth(
       { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
       'access-token',

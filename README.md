@@ -9,7 +9,6 @@ Welcome to the Challenge: Enhanced Loan Application Processing Service. This ser
 - **ORM**: Prisma
 - **API Documentation**: Swagger
 - **Authentication**: Passport with JWT tokens
-- **SWAGGER**: API documentation
 
 ## Getting Started
 
@@ -41,9 +40,17 @@ Before you begin, ensure you have Docker and Docker Compose installed on your ma
 
    - **`RUN_DEV_SEEDS`**: When set to `true`, this variable triggers the seeding of development data into your database. This is particularly useful for development and testing purposes, allowing you to work with a pre-populated database.
 
+   - **`JWT_SECRET`**: This is the secret key used to sign and verify JWT tokens. You should set this to a secure, random string to ensure the security of your tokens.
+
    Remember to set these variables in your `.env` file according to your needs before starting your application with `docker-compose up`.
 
 3. **Running the Project with Docker Compose**
+
+   considerations:
+
+   - please consider that if you are running the project for the first time, you need to run the migrations and seeds, you can do that by setting the `RUN_MIGRATIONS` and `RUN_DEV_SEEDS` to `true` in the `.env` file.
+   - the variable `RUN_DEV_SEEDS` should be set to `true` only for the first time you run the project, otherwise, it will be skipped.
+   - for recreating the database seeds, take inconsideration that the volume of the database should be removed, you can do that by running `docker-compose down -v` and then run the project again.
 
    With Docker and Docker Compose installed, and your `.env` file ready, you can start the project by running:
 
@@ -82,6 +89,5 @@ As part of the development seeds, a super admin user is created with the followi
 
 - **Username:** admin
 - **Password:** admin
-  This user can be used to access the full list of loans, since all users for now are created as applicants.
 
-Running the Project with Docker Compose
+This user can be used to access the full list of loans, since all users for now are created as applicants.

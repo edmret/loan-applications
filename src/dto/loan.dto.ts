@@ -7,7 +7,10 @@ export class LoanApplicationDto {
   amount: number;
   @ApiProperty({ example: 10, description: 'The interest rate' })
   interest: number;
-  @ApiProperty({ example: 3, description: 'The duration of the loan' })
+  @ApiProperty({
+    example: 3,
+    description: 'The duration in months of the loan',
+  })
   duration: number;
   @ApiProperty({
     example: 'User',
@@ -29,11 +32,20 @@ export class LoanApplicationDto {
     description: 'The status of the application',
   })
   status: string;
+
+  @ApiProperty({
+    example: 'true',
+    description: 'did the application get accepted?',
+  })
+  accepted: boolean;
 }
 
 export class CreateLoanApplicationDto {
   @ApiProperty({ example: 1000, description: 'The amount of the loan' })
   amount: number;
-  @ApiProperty({ example: 3, description: 'The duration of the loan' })
+  @ApiProperty({
+    example: 3,
+    description: 'The duration in months of the loan',
+  })
   duration: number;
 }

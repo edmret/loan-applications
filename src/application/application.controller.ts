@@ -6,8 +6,8 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
-import { Roles } from './decorators/roles.decorator';
-import { Role } from './enums/role.enum';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../constants/role.enum';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -16,8 +16,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApplicationService } from './application/application.service';
-import { CreateLoanApplicationDto, LoanApplicationDto } from './dto/loan.dto';
+import { ApplicationService } from './application.service';
+import { CreateLoanApplicationDto, LoanApplicationDto } from '../dto/loan.dto';
 
 @ApiTags('Application')
 @ApiBearerAuth('access-token') // Make sure this matches the key name given in the DocumentBuilder

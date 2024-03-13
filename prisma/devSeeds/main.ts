@@ -1,12 +1,41 @@
 import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
-import { Role } from '../../src/enums/role.enum';
+import { Role } from '../../src/constants/role.enum';
+import { ApplicationStatusEnum } from '../../src/constants/application.enum';
 
 const saltRounds = 10;
 
 const prisma = new PrismaClient();
 
 async function seed() {
+  // check if user admin already exists
+  const admin = await prisma.user.findUnique({
+    where: {
+      username: 'admin',
+    },
+  });
+
+  // if admin already exists, do not seed
+  if (admin) {
+    console.log('Admin already exists. Skipping seeding...');
+    return;
+  }
+
+  // seed roles
+  await prisma.role.create({
+    data: {
+      name: Role.Admin,
+      id: Role.Admin,
+    },
+  });
+
+  await prisma.role.create({
+    data: {
+      name: Role.Applicant,
+      id: Role.Applicant,
+    },
+  });
+
   // Seed users
   const password = await bcrypt.hash('admin', saltRounds);
 
@@ -35,13 +64,25 @@ async function seed() {
 
   await prisma.loan.create({
     data: {
-      amount: 100,
-      interest: 20,
+      amount: 100000,
+      interest: 100000 * 0.1 * 2,
       duration: 2,
       userId: adminUser.id,
       createdAt: '2024-03-12T23:59:56.370Z',
       updatedAt: '2024-03-12T23:59:56.370Z',
-      status: 'submitted',
+      status: ApplicationStatusEnum.submitted,
+    },
+  });
+
+  await prisma.loan.create({
+    data: {
+      amount: 2456,
+      interest: 245.6 * 6,
+      duration: 6,
+      userId: adminUser.id,
+      createdAt: '2024-03-12T23:59:56.370Z',
+      updatedAt: '2024-03-12T23:59:56.370Z',
+      status: ApplicationStatusEnum.approved,
     },
   });
 
@@ -50,7 +91,6 @@ async function seed() {
 
 seed()
   .catch((e) => {
-    console.log('-------------------------error');
     console.error(e);
     process.exit(1);
   })
