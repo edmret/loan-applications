@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  app:
+    container_name: api
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespw@postgres:5432/${DATABASE_NAME}
+      - RUN_MIGRATIONS
+      - RUN_DEV_SEEDS
+    depends_on:
+      - postgres
+    command: /bin/sh -c "chmod +x ./startup.sh && sh /app/startup.sh"
+    networks:
+      - app-network
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: postgresdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
