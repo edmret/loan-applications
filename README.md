@@ -1,73 +1,68 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Challenge: Enhanced Loan Application Processing Service
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Welcome to the Challenge: Enhanced Loan Application Processing Service. This service is designed to streamline the loan application process, providing a faster and more efficient way to handle loan applications through an automated and user-friendly platform.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technology Stack
 
-## Description
+- **Backend Framework**: NestJS
+- **Database**: PostgreSQL
+- **ORM**: Prisma
+- **API Documentation**: Swagger
+- **Authentication**: Passport with JWT tokens
+- **SWAGGER**: API documentation
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Getting Started
 
-## Installation
+### Prerequisites
 
-```bash
-$ npm install
-```
+Before you begin, ensure you have Docker and Docker Compose installed on your machine. This project uses Docker Compose to simplify the setup and running of the service, making it easy to get up and running without worrying about the intricacies of the environment setup.
 
-## Running the app
+### Setup Instructions
 
-```bash
-# development
-$ npm run start
+1. **Clone the Repository**
 
-# watch mode
-$ npm run start:dev
+   Start by cloning this repository to your local machine.
 
-# production mode
-$ npm run start:prod
-```
+   ```bash
+   git clone <repository-url>
+   ```
 
-## Test
+2. **Environment Configuration**
 
-```bash
-# unit tests
-$ npm run test
+   You need to create your own `.env` file for environment variables. For convenience, a `.env.example` file is provided in the repository. Copy the content from `.env.example` to your `.env` file to run the project in development mode.
 
-# e2e tests
-$ npm run test:e2e
+   ```
+   cp .env.example .env
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+   After creating your `.env` file from the `.env.example`, you'll need to understand the purpose of each environment variable. Here are some of the key variables:
 
-## Support
+   - **`RUN_MIGRATIONS`**: This variable controls whether the database migrations should be automatically run when the application starts. Set it to `true` to enable automatic running of migrations. This is useful for ensuring your database schema is up to date without manually applying migrations.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   - **`RUN_DEV_SEEDS`**: When set to `true`, this variable triggers the seeding of development data into your database. This is particularly useful for development and testing purposes, allowing you to work with a pre-populated database.
 
-## Stay in touch
+   Remember to set these variables in your `.env` file according to your needs before starting your application with `docker-compose up`.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+3. **Running the Project with Docker Compose**
 
-## License
+   With Docker and Docker Compose installed, and your `.env` file ready, you can start the project by running:
 
-Nest is [MIT licensed](LICENSE).
+   ```
+   docker-compose up
+   ```
+
+   This command will build and start the necessary containers for the NestJS application and the PostgreSQL database. The containers are configured to work together seamlessly, ensuring that you can start using the application without further setup.
+
+### Accessing the Application
+
+- **Swagger API Documentation**: Once the application is running, you can access the Swagger API documentation at [http://localhost:3000/api](http://localhost:3000/api). The documentation provides a comprehensive guide to the available endpoints, including request parameters and response structures.
+
+### Super Admin Credentials
+
+As part of the development seeds, a super admin user is created with the following credentials:
+
+- **Username:** admin
+- **Password:** admin
+  This user can be used to access the full list of loans, since all users for now are created as applicants.
+
+Running the Project with Docker Compose
