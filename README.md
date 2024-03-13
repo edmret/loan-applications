@@ -57,6 +57,25 @@ Before you begin, ensure you have Docker and Docker Compose installed on your ma
 
 - **Swagger API Documentation**: Once the application is running, you can access the Swagger API documentation at [http://localhost:3000/api](http://localhost:3000/api). The documentation provides a comprehensive guide to the available endpoints, including request parameters and response structures.
 
+#### Authentication
+
+the endpoints are protected by JWT token, to access the endpoints you need to get a token by sending a POST request to `/auth/login` with the following payload:
+
+```json
+{
+  "username": "admin",
+  "password": "admin"
+}
+```
+
+the response will contain the token, you can use this token to access the protected endpoints by adding it to the `Authorization` header in the following format:
+
+```
+Bearer <token
+```
+
+on the swagger documentation, you can click on the `Authorize` button and add the token to the `Value` field.
+
 ### Super Admin Credentials
 
 As part of the development seeds, a super admin user is created with the following credentials:

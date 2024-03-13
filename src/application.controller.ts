@@ -9,6 +9,7 @@ import {
 import { Roles } from './decorators/roles.decorator';
 import { Role } from './enums/role.enum';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiParam,
@@ -19,6 +20,7 @@ import { ApplicationService } from './application/application.service';
 import { CreateLoanApplicationDto, LoanApplicationDto } from './dto/loan.dto';
 
 @ApiTags('Application')
+@ApiBearerAuth('access-token') // Make sure this matches the key name given in the DocumentBuilder
 @Controller()
 export class ApplicationController {
   constructor(private applicationService: ApplicationService) {}
