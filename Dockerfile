@@ -1,4 +1,5 @@
-FROM node:lts
+FROM node:18.19-alpine3.18
+RUN apk add g++ make py3-pip
 
 # Set the working directory inside the container
 WORKDIR /app
